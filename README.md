@@ -3,10 +3,11 @@
 
 **This plugin adds the following features:**
 - Add a RuneLite notification.
-- Add customizable notification overlays such as box solid or box flash.
-- Choose custom notification sounds.
+- Customize notification overlays such as box solid or box flash.
+- Choose notification sounds.
 - Ignore friends/FC members/CC members/other players.
-- The custom notification overlay will be displayed and the audio notification will be played when you change the respective config settings. This allows the user to preview their settings. Keep in mind that you might have to temporarily disable 'Remove overlay on ignored player' when testing overlay config changes in the resource area, or the preview of the overlay will likely be removed immediately after the minimum duration set in the config.
+- The notification overlay will be displayed and the audio notification will be played when you change the respective config settings. This allows the user to preview their settings.<br>
+Keep in mind that you might have to temporarily disable 'Remove overlay on ignored player' when testing overlay config changes in the resource area, or the preview of the overlay will likely be removed immediately after the minimum duration set in the config.
 
 ![Example config](docs/img/example-config.PNG)<br>
 
