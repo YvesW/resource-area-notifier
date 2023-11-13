@@ -30,7 +30,7 @@ import java.util.concurrent.*;
 public class ResourceAreaNotifierPlugin extends Plugin {
 
 	// ------------- Wall of config vars -------------
-	// Vars are quite heavily cached so could also just config.configKey() tbh
+	// Vars are quite heavily cached so could probably just config.configKey(). However, the best practice behavior in plugins is to have a bunch of variables to store the results of the config methods, and check it in startUp/onConfigChanged. It feels redundant, but it's better than hitting the reflective calls every frame. --LlemonDuck
 	private static boolean notifyOnGateOpen;
 	@Getter
 	private static NotificationOverlay notificationOverlay;
