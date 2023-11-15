@@ -14,12 +14,11 @@ Keep in mind that you might have to temporarily disable 'Remove overlay on ignor
 ## Additional info
 Please note that this plugin does **not** provide the user with any information that would otherwise not be available to them!
 
-If you experience any issues or have any concerns, please reach out to YvesW via a GitHub Issue, by Discord direct messaging or via the RuneLite Discord by mentioning @Yves W.
+If you experience any issues or have any concerns, please reach out to YvesW via a GitHub Issue, by Discord direct messaging or via the RuneLite Discord by mentioning @``YvesW``.
 
 Thanks to [m0bilebtw](https://github.com/m0bilebtw) for the SoundEngine and SoundFileManager code! They've only been slightly adjusted.
 
 ## Changelog
-
 xx-xxxx:
 - No changes yet!
 
