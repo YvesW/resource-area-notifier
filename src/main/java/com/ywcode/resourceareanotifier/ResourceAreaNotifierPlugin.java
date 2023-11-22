@@ -56,7 +56,7 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 	private static boolean ignoreFriends;
 	private static boolean ignoreFCMembers;
 	private static boolean ignoreCCMembers;
-	private static final List<String> playersToIgnore = new ArrayList<>();
+	private static final HashSet<String> playersToIgnore = new HashSet<>();
 	// ------------- End of wall of config vars -------------
 
 	private static final int gateOpenFloorId = 38848;
@@ -72,10 +72,10 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 	//private static final WorldArea resourceAreaWorldArea = new WorldArea(resourceAreaX1, resourceAreaY1, resourceAreaX2-resourceAreaX1+1, resourceAreaY2-resourceAreaY1+1, 0);
 	private static final WorldArea resourceAreaYPlus3WorldArea = new WorldArea(resourceAreaX1, resourceAreaY1, resourceAreaX2-resourceAreaX1+1, resourceAreaY2Plus3-resourceAreaY1+1, 0); //Location x, y with width 1 and height 1 would be a 1x1 tile, but x-x and y-y would be 0 so +1
 	private static final WorldArea resourceAreaPlayerSpawnedWorldArea = new WorldArea(resourceAreaX1, gateTilesVisibleY, resourceAreaX2-resourceAreaX1+1, resourceAreaY2-gateTilesVisibleY+1, 0); //Location x, y with width 1 and height 1 would be a 1x1 tile, but x-x and y-y would be 0 so +1
-	private static final List<Player> currentTickOutsidePlayers = new ArrayList<>();
-	private static final List<Player> currentTickInsidePlayers = new ArrayList<>();
-	private static final List<Player> previousTickOutsidePlayers = new ArrayList<>();
-	private static final List<Player> previousTickInsidePlayers = new ArrayList<>();
+	private static final HashSet<Player> currentTickOutsidePlayers = new HashSet<>();
+	private static final HashSet<Player> currentTickInsidePlayers = new HashSet<>();
+	private static final HashSet<Player> previousTickOutsidePlayers = new HashSet<>();
+	private static final HashSet<Player> previousTickInsidePlayers = new HashSet<>();
 	private static boolean listsEmpty = true;
 	private static boolean gateOpenedThisTick; //The default value for a boolean (primitive) is false.
 	private static boolean overlayActive; //The default value for a boolean (primitive) is false. To prevent >1 overlay active at the same time
@@ -141,7 +141,7 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 			String configKey = configChanged.getKey();
 			//Update playersToIgnore separately, only when specifically that key is changed. Probably doesn't matter that much, but maybe some weirdo puts in 10k values and makes it somewhat impactful to run?
 			if (configKey.equals("playersToIgnore")) {
-				convertCommaSeparatedConfigStringToList(config.playersToIgnore(), playersToIgnore);
+				convertCommaSeparatedConfigStringToSet(config.playersToIgnore(), playersToIgnore);
 			}
 
 			//Alternatively use the old code. See code at the end if you ever decide to swap back to it.
@@ -187,7 +187,7 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 		ignoreFCMembers = config.ignoreFCMembers();
 		ignoreCCMembers = config.ignoreCCMembers();
 		if (updateList) { //Probably doesn't matter that much, but maybe some weirdo puts in 10k values and makes it somewhat impactful to run?
-			convertCommaSeparatedConfigStringToList(config.playersToIgnore(), playersToIgnore);
+			convertCommaSeparatedConfigStringToSet(config.playersToIgnore(), playersToIgnore);
 		}
 		//In case maximum overlay duration is less than minimum duration, set maximum to minimum
 		if (maximumNotificationOverlayDuration < minimumNotificationOverlayDuration) {
@@ -297,10 +297,10 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 		nanoOverlayStart = 0;
 	}
 
-	private void convertCommaSeparatedConfigStringToList(String configString, List<String> listToConvertTo) { //Value can be inlined since only used once, but I'd like to keep it useful for other lists in the future
+	private void convertCommaSeparatedConfigStringToSet(String configString, HashSet<String> setToConvertTo) { //Value can be inlined since only used once, but I'd like to keep it useful for other sets in the future
 		//Convert a CSV config string to a list
-		listToConvertTo.clear();
-		listToConvertTo.addAll(Text.fromCSV(Text.standardize(configString)));
+		setToConvertTo.clear();
+		setToConvertTo.addAll(Text.fromCSV(Text.standardize(configString)));
 	}
 
 	private void addNotificationOverlays() {
@@ -374,11 +374,11 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 		}
 	}
 
-	private void updateLists(List<Player> listToCopyTo, List<Player> listToCopyFrom) {
+	private void updateLists(HashSet<Player> setToCopyTo, HashSet<Player> setToCopyFrom) {
 		//Clear the new list, then add all elements from the old list, then clear the old list
-		listToCopyTo.clear();
-		listToCopyTo.addAll(listToCopyFrom);
-		listToCopyFrom.clear();
+		setToCopyTo.clear();
+		setToCopyTo.addAll(setToCopyFrom);
+		setToCopyFrom.clear();
 	}
 
 	private void notifyGateOpened() {
@@ -457,7 +457,7 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 	}
 
 	@Nullable
-	private Player getPlayerEnteredOrLeft(List<Player> previousTick, List<Player> currentTickOpposite) {
+	private Player getPlayerEnteredOrLeft(HashSet<Player> previousTick, HashSet<Player> currentTickOpposite) {
 		//Compare lists that contain players from the previous tick and current tick.
 		//If current tick player is on previous tick list, then he gated (entered or left) => return the player.
 		//Only one player can gate per tick, so returning the first (and in practice only possible) match is fine!
