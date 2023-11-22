@@ -30,7 +30,7 @@ public class SoundEngine {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private boolean loadClip(Sound sound) {
-        try (InputStream stream = new BufferedInputStream(SoundFileManager.getSoundStream(sound))) {
+        try (InputStream stream = new BufferedInputStream(SoundFileManager.getSoundStream(sound))) { //Potentially check out https://github.com/m0bilebtw/c-engineer-completed/commit/d251b6f790ca9dc1b83c03705225c22eceb793d7 if you want to change this a bit.
             try (AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(stream)) {
                 clip.open(audioInputStream); //Liable to error with pulseaudio, works on windows, one user informed that mac works
             }

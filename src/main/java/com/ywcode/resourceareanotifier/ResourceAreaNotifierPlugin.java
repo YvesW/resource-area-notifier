@@ -338,7 +338,7 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 		if (notificationSound == Sound.DISABLED) {
 			return;
 		}
-		executor.submit(() -> { //Not sure if submitting to an executor is required here, but better safe than sorry with all the client stuttering due to audio. Otherwise it'd also probably e.g. keep the config dropdown box stuck open if it's slowly loading the clips, which is not nice.
+		executor.submit(() -> { //Should probably submit to an executor indeed. If you'd like to test out a different option, check https://github.com/m0bilebtw/c-engineer-completed/commit/d251b6f790ca9dc1b83c03705225c22eceb793d7 but probably still submit instead of execute. Otherwise it'd also probably e.g. keep the config dropdown box stuck open if it's slowly loading the clips, which is not nice.
 			soundEngine.playClip(notificationSound);
 		});
 	}
