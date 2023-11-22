@@ -358,8 +358,8 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 
 	private void cachePlayers() {
 		listsEmpty = false;
-		updateLists(previousTickOutsidePlayers, currentTickOutsidePlayers); //Clear previous list and addAll elements of current
-		updateLists(previousTickInsidePlayers, currentTickInsidePlayers);
+		updateSets(previousTickOutsidePlayers, currentTickOutsidePlayers); //Clear previous list and addAll elements of current
+		updateSets(previousTickInsidePlayers, currentTickInsidePlayers);
 		//Populate currentTickLists
 		List<Player> players = client.getPlayers();
 		for (Player player : players) {
@@ -374,7 +374,7 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 		}
 	}
 
-	private void updateLists(HashSet<Player> setToCopyTo, HashSet<Player> setToCopyFrom) {
+	private void updateSets(HashSet<Player> setToCopyTo, HashSet<Player> setToCopyFrom) {
 		//Clear the new list, then add all elements from the old list, then clear the old list
 		setToCopyTo.clear();
 		setToCopyTo.addAll(setToCopyFrom);
