@@ -297,10 +297,15 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 		nanoOverlayStart = 0;
 	}
 
-	private void convertCommaSeparatedConfigStringToSet(String configString, HashSet<String> setToConvertTo) { //Value can be inlined since only used once, but I'd like to keep it useful for other sets in the future
-		//Convert a CSV config string to a list
+	//Value can be inlined since only used once, but I'd like to keep it useful for other sets in the future
+	@SuppressWarnings("SameParameterValue")
+	private void convertCommaSeparatedConfigStringToSet(String configString, HashSet<String> setToConvertTo) {
+		//Convert a CSV config string to a set
 		setToConvertTo.clear();
-		setToConvertTo.addAll(Text.fromCSV(Text.standardize(configString)));
+		//standardize: removes tags, replace nbsp with space, made lower case, trims technically (but not split yet, so done later)
+		// -> replaceAll("\\R", "") -> remove all unicode linebreak sequences (see https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html). replaceAll is used instead of replace since replaceAll uses regex as input instead of just a regular string.
+		// -> fromCSV: splits on commas, omits empty strings, trims results
+		setToConvertTo.addAll(Text.fromCSV(Text.standardize(configString).replaceAll("\\R", "")));
 	}
 
 	private void addNotificationOverlays() {
