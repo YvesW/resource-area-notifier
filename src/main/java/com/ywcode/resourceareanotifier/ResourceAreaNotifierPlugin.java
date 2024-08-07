@@ -198,8 +198,7 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 
 	@Subscribe
 	public void onProfileChanged(ProfileChanged profileChanged) {
-		removeNotificationOverlays(); //Tbh idk if this needed; OverlayManager handles some of it already and if it flips the plugin off, it's already removed anyway but enfin
-		updateConfig(true);
+		removeNotificationOverlays(); //ProfileChanged procs right after ConfigChanged if a user switches between a profile and a config setting is changed. In case overlay settings differ between profile, it'd trigger an overlay (normally done so the user understands how it'd look). Immediately remove said overlay.
 	}
 
 	@Subscribe
