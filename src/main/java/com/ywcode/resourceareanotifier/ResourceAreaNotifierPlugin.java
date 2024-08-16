@@ -56,7 +56,7 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 	private static boolean ignoreFriends;
 	private static boolean ignoreFCMembers;
 	private static boolean ignoreCCMembers;
-	private static final HashSet<String> playersToIgnore = new HashSet<>();
+	private static final Set<String> playersToIgnore = new HashSet<>();
 	// ------------- End of wall of config vars -------------
 
 	private static final int gateOpenFloorId = 38848;
@@ -72,10 +72,10 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 	//private static final WorldArea resourceAreaWorldArea = new WorldArea(resourceAreaX1, resourceAreaY1, resourceAreaX2-resourceAreaX1+1, resourceAreaY2-resourceAreaY1+1, 0);
 	private static final WorldArea resourceAreaYPlus3WorldArea = new WorldArea(resourceAreaX1, resourceAreaY1, resourceAreaX2-resourceAreaX1+1, resourceAreaY2Plus3-resourceAreaY1+1, 0); //Location x, y with width 1 and height 1 would be a 1x1 tile, but x-x and y-y would be 0 so +1
 	private static final WorldArea resourceAreaPlayerSpawnedWorldArea = new WorldArea(resourceAreaX1, gateTilesVisibleY, resourceAreaX2-resourceAreaX1+1, resourceAreaY2-gateTilesVisibleY+1, 0); //Location x, y with width 1 and height 1 would be a 1x1 tile, but x-x and y-y would be 0 so +1
-	private static final HashSet<Player> currentTickOutsidePlayers = new HashSet<>();
-	private static final HashSet<Player> currentTickInsidePlayers = new HashSet<>();
-	private static final HashSet<Player> previousTickOutsidePlayers = new HashSet<>();
-	private static final HashSet<Player> previousTickInsidePlayers = new HashSet<>();
+	private static final Set<Player> currentTickOutsidePlayers = new HashSet<>();
+	private static final Set<Player> currentTickInsidePlayers = new HashSet<>();
+	private static final Set<Player> previousTickOutsidePlayers = new HashSet<>();
+	private static final Set<Player> previousTickInsidePlayers = new HashSet<>();
 	private static boolean listsEmpty = true;
 	private static boolean gateOpenedThisTick; //The default value for a boolean (primitive) is false.
 	private static boolean overlayActive; //The default value for a boolean (primitive) is false. To prevent >1 overlay active at the same time
@@ -298,7 +298,7 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 
 	//Value can be inlined since only used once, but I'd like to keep it useful for other sets in the future
 	@SuppressWarnings("SameParameterValue")
-	private void convertCommaSeparatedConfigStringToSet(String configString, HashSet<String> setToConvertTo) {
+	private void convertCommaSeparatedConfigStringToSet(String configString, Set<String> setToConvertTo) {
 		//Convert a CSV config string to a set
 		setToConvertTo.clear();
 		//standardize: removes tags, replace nbsp with space, made lower case, trims technically (but not split yet, so done later)
@@ -378,7 +378,7 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 		}
 	}
 
-	private void updateSets(HashSet<Player> setToCopyTo, HashSet<Player> setToCopyFrom) {
+	private void updateSets(Set<Player> setToCopyTo, Set<Player> setToCopyFrom) {
 		//Clear the new list, then add all elements from the old list, then clear the old list
 		setToCopyTo.clear();
 		setToCopyTo.addAll(setToCopyFrom);
@@ -461,7 +461,7 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 	}
 
 	@Nullable
-	private Player getPlayerEnteredOrLeft(HashSet<Player> previousTick, HashSet<Player> currentTickOpposite) {
+	private Player getPlayerEnteredOrLeft(Set<Player> previousTick, Set<Player> currentTickOpposite) {
 		//Compare lists that contain players from the previous tick and current tick.
 		//If current tick player is on previous tick list, then he gated (entered or left) => return the player.
 		//Only one player can gate per tick, so returning the first (and in practice only possible) match is fine!
