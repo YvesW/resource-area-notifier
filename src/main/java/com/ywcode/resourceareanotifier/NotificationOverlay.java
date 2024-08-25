@@ -1,6 +1,7 @@
 package com.ywcode.resourceareanotifier;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter

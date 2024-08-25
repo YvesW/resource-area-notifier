@@ -1,7 +1,12 @@
 package com.ywcode.resourceareanotifier;
 
-import net.runelite.client.config.*;
-import net.runelite.client.ui.overlay.components.*;
+import net.runelite.client.config.Alpha;
+import net.runelite.client.config.Config;
+import net.runelite.client.config.ConfigGroup;
+import net.runelite.client.config.ConfigItem;
+import net.runelite.client.config.Range;
+import net.runelite.client.config.Units;
+import net.runelite.client.ui.overlay.components.ComponentConstants;
 
 import java.awt.*;
 

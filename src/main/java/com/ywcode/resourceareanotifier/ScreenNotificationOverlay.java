@@ -1,9 +1,11 @@
 package com.ywcode.resourceareanotifier;
 
-import net.runelite.api.*;
-import net.runelite.client.ui.overlay.*;
+import net.runelite.api.Client;
+import net.runelite.client.ui.overlay.OverlayLayer;
+import net.runelite.client.ui.overlay.OverlayPanel;
+import net.runelite.client.ui.overlay.OverlayPosition;
 
-import javax.inject.*;
+import javax.inject.Inject;
 import java.awt.*;
 
 public class ScreenNotificationOverlay extends OverlayPanel {

@@ -1,14 +1,29 @@
 package com.ywcode.resourceareanotifier;
 
-import lombok.*;
-import lombok.extern.slf4j.*;
-import net.runelite.client.*;
-import okhttp3.*;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import net.runelite.client.RuneLite;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
-import java.io.*;
-import java.nio.file.*;
-import java.util.*;
-import java.util.stream.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 //Copyright (c) 2021, m0bilebtw
 //Opted to largely use m0bilebtw's SoundEngine/SoundFileManager because sounds so often cause client stutters and this code has been tested quite often plus is easy to repurpose.
