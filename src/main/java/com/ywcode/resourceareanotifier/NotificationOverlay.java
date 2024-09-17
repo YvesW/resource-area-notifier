@@ -1,10 +1,11 @@
 package com.ywcode.resourceareanotifier;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Getter
+@Getter(AccessLevel.PACKAGE)
 public enum NotificationOverlay {
     Disabled("Disabled"),
     BoxSolid("Box solid"),

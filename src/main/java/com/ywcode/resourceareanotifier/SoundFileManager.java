@@ -1,5 +1,6 @@
 package com.ywcode.resourceareanotifier;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.RuneLite;
@@ -31,7 +32,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public abstract class SoundFileManager {
 
-    @Getter
+    @Getter(AccessLevel.PACKAGE)
     private static final File DOWNLOAD_DIR = new File(RuneLite.RUNELITE_DIR.getPath() + File.separator + "resource-area-notifier-sounds");
     private static final String DELETE_WARNING_FILENAME = "EXTRA_FILES_WILL_BE_DELETED_BUT_FOLDERS_WILL_REMAIN"; //Warning for in the DOWNLOAD_DIR folder
     private static final File DELETE_WARNING_FILE = new File(DOWNLOAD_DIR, DELETE_WARNING_FILENAME);

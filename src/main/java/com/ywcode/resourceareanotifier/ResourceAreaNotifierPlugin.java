@@ -2,6 +2,7 @@ package com.ywcode.resourceareanotifier;
 
 import com.google.inject.Inject;
 import com.google.inject.Provides;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
@@ -43,24 +44,24 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 	// ------------- Wall of config vars -------------
 	// Vars are quite heavily cached so could probably just config.configKey(). However, the best practice behavior in plugins is to have a bunch of variables to store the results of the config methods, and check it in startUp/onConfigChanged. It feels redundant, but it's better than hitting the reflective calls every frame. --LlemonDuck
 	private static boolean notifyOnGateOpen;
-	@Getter
+	@Getter(AccessLevel.PACKAGE)
 	private static NotificationOverlay notificationOverlay;
-	@Getter
+	@Getter(AccessLevel.PACKAGE)
 	private static Color solidFlashColor;
-	@Getter
+	@Getter(AccessLevel.PACKAGE)
 	private static Color boxColorPrimary;
-	@Getter
+	@Getter(AccessLevel.PACKAGE)
 	private static Color boxColorSecondary;
-	@Getter
+	@Getter(AccessLevel.PACKAGE)
 	private static int boxHeight;
-	@Getter
+	@Getter(AccessLevel.PACKAGE)
 	private static int boxWidth;
 	private static int minimumNotificationOverlayDuration;
 	private static int maximumNotificationOverlayDuration;
 	private static boolean removeOverlayInteracting;
 	private static boolean removeOverlayIgnore;
 	private static Sound notificationSound;
-	@Getter
+	@Getter(AccessLevel.PACKAGE)
 	private static int notificationSoundVolume;
 	private static boolean ignoreVeryClose;
 	private static boolean ignoreClose;
