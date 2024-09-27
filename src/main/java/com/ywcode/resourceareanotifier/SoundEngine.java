@@ -35,12 +35,12 @@ public class SoundEngine {
     private static final long CLIP_MTIME_UNLOADED = -2;
 
     private long lastClipMTime = CLIP_MTIME_UNLOADED;
-    private Clip clip = null;
+    private Clip clip;
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private boolean loadClip(Sound sound) {
-        try (InputStream stream = new BufferedInputStream(SoundFileManager.getSoundStream(sound))) { //Potentially check out https://github.com/m0bilebtw/c-engineer-completed/commit/d251b6f790ca9dc1b83c03705225c22eceb793d7 if you want to change this a bit.
-            try (AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(stream)) {
+        try (final InputStream stream = new BufferedInputStream(SoundFileManager.getSoundStream(sound))) { //Potentially check out https://github.com/m0bilebtw/c-engineer-completed/commit/d251b6f790ca9dc1b83c03705225c22eceb793d7 if you want to change this a bit.
+            try (final AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(stream)) {
                 clip.open(audioInputStream); //Liable to error with pulseaudio, works on windows, one user informed that mac works
             }
             return true;
@@ -49,7 +49,7 @@ public class SoundEngine {
             Toolkit.getDefaultToolkit().beep();
             log.warn("Failed to load Resource Area Notifier sound " + sound + ". Use 16-bit .wav files (not 32-bit) if trying to use custom files. Attempting to delete and re-download the file now.", e);
             //Delete problematic file
-            File toDelete = new File(SoundFileManager.getDOWNLOAD_DIR(), sound.getResourceName());
+            final File toDelete = new File(SoundFileManager.getDOWNLOAD_DIR(), sound.getResourceName());
             toDelete.delete();
             //Re-download just deleted file
             executor.submit(() -> {
@@ -64,7 +64,7 @@ public class SoundEngine {
     }
 
     public void playClip(Sound sound) {
-        long currentMTime = System.currentTimeMillis(); //Maybe swap to nanoTime at some point?
+        final long currentMTime = System.currentTimeMillis(); //Maybe swap to nanoTime at some point?
         if (clip == null || currentMTime != lastClipMTime || !clip.isOpen()) {
             if (clip != null && clip.isOpen()) {
                 clip.close();
@@ -86,7 +86,7 @@ public class SoundEngine {
         }
 
         //User configurable volume
-        FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        final FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         float gain = 20f * (float) Math.log10(ResourceAreaNotifierPlugin.getNotificationSoundVolume() / 100f);
         gain = Math.min(gain, volume.getMaximum());
         gain = Math.max(gain, volume.getMinimum());

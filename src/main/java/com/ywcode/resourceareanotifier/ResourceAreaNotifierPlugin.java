@@ -151,7 +151,7 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 			//Update config values
 			updateConfig(false);
 
-			String configKey = configChanged.getKey();
+			final String configKey = configChanged.getKey();
 			//Update playersToIgnore separately, only when specifically that key is changed. Probably doesn't matter that much, but maybe some weirdo puts in 10k values and makes it somewhat impactful to run?
 			if (configKey.equals("playersToIgnore")) {
 				convertCommaSeparatedConfigStringToSet(config.playersToIgnore(), playersToIgnore);
@@ -237,7 +237,7 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 
 		//Events fire like this: tick 1 onGameTick WorldPoint BEFORE moving through gate, tick 2 onWallObjectSpawned, tick 2 onGameTick WorldPoint AFTER moving through gate. So moving takes 1 tick but onGameTick always fires as the last event of the tick (as it should).
 		if (localPlayerIsInResourceAreaAndYPlus3) { //if localPlayer = in resource area +3
-			int localPlayerY = WorldPoint.fromLocalInstance(client, client.getLocalPlayer().getLocalLocation()).getY();
+			final int localPlayerY = WorldPoint.fromLocalInstance(client, client.getLocalPlayer().getLocalLocation()).getY();
 			//Alternatively use client.getLocalPlayer().getWorldLocation().getY() => this would result in the same outcome in this case. The currently used method just accounts for instances (which is irrelevant when in the resource area, I guess)
 			if (localPlayerY < gateTilesVisibleY) { //Players potentially not visible anymore (lists might be/are incorrect), clear lists.
 				clearCacheLists();
@@ -265,8 +265,8 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 		//Players can't log in to the resource area
 
 		if (localPlayerIsInResourceAreaAndYPlus3 && gateOpenedAmount > 0) {
-			Player spawnedPlayer = playerSpawned.getPlayer();
-			String spawnedPlayerUsername = spawnedPlayer.getName();
+			final Player spawnedPlayer = playerSpawned.getPlayer();
+			final String spawnedPlayerUsername = spawnedPlayer.getName();
 
 			//Check if ignore options are enabled and if so, reduce gateOpenedAmount when ignored player spawns
 			if ((ignoreFriends && spawnedPlayer.isFriend()) ||
@@ -361,11 +361,11 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 	}
 
 	private boolean isInResourceAreaAndYPlus3() { //Is local player in resource area (Y+3)?
-		Player player = client.getLocalPlayer();
+		final Player player = client.getLocalPlayer();
 		if (player == null) {
 			return false;
 		}
-		WorldPoint playerWorldPoint = WorldPoint.fromLocalInstance(client, player.getLocalLocation());
+		final WorldPoint playerWorldPoint = WorldPoint.fromLocalInstance(client, player.getLocalLocation());
 		return resourceAreaYPlus3WorldArea.contains(playerWorldPoint);
 		//Alternatively:
 		//int localPlayerX = playerWorldPoint.getX();
@@ -378,9 +378,9 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 		updateSets(previousTickOutsidePlayers, currentTickOutsidePlayers); //Clear previous list and addAll elements of current
 		updateSets(previousTickInsidePlayers, currentTickInsidePlayers);
 		//Populate currentTickLists
-		List<Player> players = client.getPlayers();
+		final List<Player> players = client.getPlayers();
 		for (Player player : players) {
-			WorldPoint playerWorldPoint = player.getWorldLocation();
+			final WorldPoint playerWorldPoint = player.getWorldLocation();
 			if (playerWorldPoint.equals(gateOpenFloorWorldPoint)) { //Player standing inside
 				currentTickInsidePlayers.add(player);
 				continue; //Go to next iteration because a player can't be on multiple tiles on the same tick
@@ -409,12 +409,12 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 	}
 
 	private boolean shouldNotify() {
-		Player player = client.getLocalPlayer();
+		final Player player = client.getLocalPlayer();
 		if (player == null) {
 			return false;
 		}
 
-		int localPlayerY = WorldPoint.fromLocalInstance(client, player.getLocalLocation()).getY();
+		final int localPlayerY = WorldPoint.fromLocalInstance(client, player.getLocalLocation()).getY();
 		if (localPlayerY < gateTilesVisibleY) { //No cached players, notify in all cases
 			return true;
 		}
@@ -424,7 +424,7 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 			return false;
 		}
 
-		Player gatingPlayer = getPlayerThatGated();
+		final Player gatingPlayer = getPlayerThatGated();
 
 		if (gatingPlayer == null) { //If none of the cached players went in or out, cache is incorrect or incomplete => always notify. E.g. when just running in vision on the tick that the person enters.
 			return true;
@@ -439,7 +439,7 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 		}
 
 		//Ignore player if username is entered in config Text.standardized ignore CSV string
-		String gatingPlayerUsername = gatingPlayer.getName();
+		final String gatingPlayerUsername = gatingPlayer.getName();
 		if (gatingPlayerUsername != null && playersToIgnore.contains(Text.standardize(gatingPlayerUsername))) {
 			return false;
 		}
@@ -506,9 +506,9 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 
 			//Remove overlay when interacting if the config setting is enabled
 			//Any interaction with the client since the notification started will set the flag for removal
-			long mouseIdleNanoTime = (long) client.getMouseIdleTicks() * Constants.CLIENT_TICK_LENGTH * 1000000;
-			long keyboardIdleNanoTime = (long) client.getKeyboardIdleTicks() * Constants.CLIENT_TICK_LENGTH * 1000000;
-			long currentNanoTime = System.nanoTime();
+			final long mouseIdleNanoTime = (long) client.getMouseIdleTicks() * Constants.CLIENT_TICK_LENGTH * 1000000;
+			final long keyboardIdleNanoTime = (long) client.getKeyboardIdleTicks() * Constants.CLIENT_TICK_LENGTH * 1000000;
+			final long currentNanoTime = System.nanoTime();
 			//RL notifier has:
 			/*if ((client.getMouseIdleTicks() < MINIMUM_FLASH_DURATION_TICKS
 						|| client.getKeyboardIdleTicks() < MINIMUM_FLASH_DURATION_TICKS

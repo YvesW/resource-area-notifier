@@ -51,11 +51,11 @@ public abstract class SoundFileManager {
 
     public static void downloadAllMissingSounds(final OkHttpClient okHttpClient) {
         //Get set of existing files in our dir - existing sounds will be skipped, unexpected files (not dirs, some sounds depending on config [edit: removed this option for now]) will be deleted
-        Set<String> filesPresent = getFilesPresent();
+        final Set<String> filesPresent = getFilesPresent();
 
         //Download any sounds that are not yet present but desired
         for (Sound sound : getDesiredSoundList()) {
-            String fileNameToDownload = sound.getResourceName();
+            final String fileNameToDownload = sound.getResourceName();
             if (filesPresent.contains(fileNameToDownload) || fileNameToDownload.equals(Sound.DISABLED.getResourceName())) { //Don't try to download a file called Disabled_v1.0.wav
                 filesPresent.remove(fileNameToDownload);
                 continue;
@@ -66,8 +66,8 @@ public abstract class SoundFileManager {
                 log.error("Resource Area Notifications could not download sounds due to an unexpected null RAW_GITHUB value");
                 return;
             }
-            HttpUrl soundUrl = RAW_GITHUB.newBuilder().addPathSegment(fileNameToDownload).build();
-            Path outputPath = Paths.get(DOWNLOAD_DIR.getPath(), fileNameToDownload);
+            final HttpUrl soundUrl = RAW_GITHUB.newBuilder().addPathSegment(fileNameToDownload).build();
+            final Path outputPath = Paths.get(DOWNLOAD_DIR.getPath(), fileNameToDownload);
             okHttpClient.newCall(new Request.Builder().url(soundUrl).build()).enqueue(new Callback() {
                 //Even though it doesn't matter because it's submitted to the executorService, I'm using enqueue instead of execute. I hope Ron is proud of me.
                 @Override
@@ -93,14 +93,14 @@ public abstract class SoundFileManager {
         //We now delete them to avoid cluttering up disk space
         //We leave dirs behind (getFilesPresent ignores dirs) as we aren't creating those anyway, so they won't build up over time
         for (String filename : filesPresent) {
-            File toDelete = new File(DOWNLOAD_DIR, filename);
+            final File toDelete = new File(DOWNLOAD_DIR, filename);
             //noinspection ResultOfMethodCallIgnored
             toDelete.delete();
         }
     }
 
     private static Set<String> getFilesPresent() {
-        File[] downloadDirFiles = DOWNLOAD_DIR.listFiles();
+        final File[] downloadDirFiles = DOWNLOAD_DIR.listFiles();
         if (downloadDirFiles == null || downloadDirFiles.length == 0) {
             return new HashSet<>();
         }
