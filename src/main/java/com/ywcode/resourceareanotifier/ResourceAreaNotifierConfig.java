@@ -4,6 +4,7 @@ import net.runelite.client.config.Alpha;
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
+import net.runelite.client.config.Notification;
 import net.runelite.client.config.Range;
 import net.runelite.client.config.Units;
 import net.runelite.client.ui.overlay.components.ComponentConstants;
@@ -20,8 +21,8 @@ public interface ResourceAreaNotifierConfig extends Config {
 					"Thus the settings below will not have any effect on this notification. Configure it in the RuneLite config.",
 			position = 0
 	)
-	default boolean notifyOnGateOpen() {
-		return false;
+	default Notification notifyOnGateOpen() {
+		return Notification.OFF;
 	}
 
 	@ConfigItem(

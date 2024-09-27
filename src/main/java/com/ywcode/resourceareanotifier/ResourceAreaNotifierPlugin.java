@@ -17,6 +17,7 @@ import net.runelite.api.events.PlayerSpawned;
 import net.runelite.api.events.WallObjectSpawned;
 import net.runelite.client.Notifier;
 import net.runelite.client.config.ConfigManager;
+import net.runelite.client.config.Notification;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.events.ProfileChanged;
@@ -43,7 +44,7 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 
 	// ------------- Wall of config vars -------------
 	// Vars are quite heavily cached so could probably just config.configKey(). However, the best practice behavior in plugins is to have a bunch of variables to store the results of the config methods, and check it in startUp/onConfigChanged. It feels redundant, but it's better than hitting the reflective calls every frame. --LlemonDuck
-	private static boolean notifyOnGateOpen;
+	private static Notification notifyOnGateOpen;
 	@Getter(AccessLevel.PACKAGE)
 	private static NotificationOverlay notificationOverlay;
 	@Getter(AccessLevel.PACKAGE)
@@ -401,9 +402,7 @@ public class ResourceAreaNotifierPlugin extends Plugin {
 		//If player should be notified, notify and increase gateOpenedAmount
 		if (shouldNotify()) {
 			gateOpenedAmount++;
-			if (notifyOnGateOpen) {
-				notifier.notify("Wilderness Resource Area gate opened!");
-			}
+			notifier.notify(notifyOnGateOpen, "Wilderness Resource Area gate opened!");
 			addNotificationOverlays(); //Method already checks if this is set to NotificationOverlay.Disabled
 			playNotificationSound(); //Method already checks if this is set to NotificationSound.Disabled
 		}
